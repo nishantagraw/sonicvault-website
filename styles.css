@@ -217,9 +217,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-logo img {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 80px;
+  height: auto;
 }
 
 .nav-logo .logo-text span {
@@ -232,6 +231,10 @@ h1, h2, h3, h4, h5, h6 {
 /* Navbar inside the dark hero */
 .hero .nav-logo .logo-text {
   color: #fff;
+}
+
+.navbar:not(.scrolled) .nav-logo img {
+  filter: invert(1) brightness(2);
 }
 
 .nav-links {

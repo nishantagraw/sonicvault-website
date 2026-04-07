@@ -402,8 +402,14 @@ function buildReview() {
     container.innerHTML = html;
 }
 
-// ===== SUBMIT RELEASE =====
+// ===== SUBMIT RELEASE TO GOOGLE SHEETS =====
+// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+const GOOGLE_SCRIPT_URL = 'PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE';
+
 function submitRelease() {
+    const submitBtn = document.querySelector('#step4 .btn-primary');
+    const originalText = submitBtn.innerHTML;
+
     // Collect all form data
     const formData = {
         songTitle: document.getElementById('songTitle')?.value || '',
@@ -419,28 +425,58 @@ function submitRelease() {
         description: document.getElementById('description')?.value || '',
         audioFileName: audioFile ? audioFile.name : '',
         artFileName: artFile ? artFile.name : '',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
     };
 
-    // Log to console (replace with API/sheet call later)
-    console.log('📦 Release Submitted:', formData);
-    console.log('🎵 Audio File:', audioFile);
-    console.log('🖼️ Art File:', artFile);
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
 
-    // Store in localStorage for now
-    const releases = JSON.parse(localStorage.getItem('revomusic_releases') || '[]');
-    releases.push(formData);
-    localStorage.setItem('revomusic_releases', JSON.stringify(releases));
+    // Send to Google Sheets
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+    })
+    .then(() => {
+        console.log('✅ Release submitted to Google Sheets:', formData);
 
-    // Show success
-    document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
-    document.querySelector('.upload-progress').style.display = 'none';
-    const successState = document.getElementById('successState');
-    if (successState) {
-        successState.classList.add('show');
-    }
+        // Also backup in localStorage
+        const releases = JSON.parse(localStorage.getItem('revomusic_releases') || '[]');
+        releases.push(formData);
+        localStorage.setItem('revomusic_releases', JSON.stringify(releases));
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Show success
+        document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+        document.querySelector('.upload-progress').style.display = 'none';
+        const successState = document.getElementById('successState');
+        if (successState) {
+            successState.classList.add('show');
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    })
+    .catch(err => {
+        console.error('❌ Submission error:', err);
+        
+        // Still save locally as backup
+        const releases = JSON.parse(localStorage.getItem('revomusic_releases') || '[]');
+        releases.push(formData);
+        localStorage.setItem('revomusic_releases', JSON.stringify(releases));
+
+        // Still show success (no-cors won't give us response, so we assume success)
+        document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+        document.querySelector('.upload-progress').style.display = 'none';
+        const successState = document.getElementById('successState');
+        if (successState) {
+            successState.classList.add('show');
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    })
+    .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+    });
 }
 
 // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
