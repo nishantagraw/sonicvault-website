@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SonicVault — Distribute Your Music Worldwide</title>
+    <meta name="description" content="SonicVault is the ultimate music distribution platform. Distribute your songs to 200+ streaming platforms, promote your music globally, and earn royalties — all from one dashboard.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <img src="assets/images/logo.png" alt="SonicVault Logo">
+            <span class="logo-text">Sonic<span>Vault</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="upload.html">Upload Music</a>
+            <a href="agreement.html">Agreement</a>
+        </div>
+        <div class="nav-actions">
+            <a href="upload.html" class="btn btn-primary">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Get Started
+            </a>
+        </div>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose"><i class="fa-solid fa-xmark"></i></button>
+    <a href="index.html">Home</a>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="upload.html">Upload Music</a>
+    <a href="agreement.html">Agreement</a>
+    <a href="upload.html" class="btn btn-primary" style="margin-top: 16px;">Get Started</a>
+</div>
+
+<!-- ===== HERO — UNIQUE EQUALIZER DESIGN ===== -->
+<section class="hero" id="hero">
+    <!-- Animated equalizer bars background -->
+    <div class="hero-equalizer" id="heroEqualizer"></div>
+    <!-- Subtle grid overlay -->
+    <div class="hero-grid-overlay"></div>
+    <!-- Radial glow behind content -->
+    <div class="hero-radial-glow"></div>
+    <!-- Floating glow orbs -->
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="hero-content">
+        <div class="hero-badge">
+            <i class="fa-solid fa-bolt"></i>
+            Distribute to 200+ Streaming Platforms Worldwide
+        </div>
+        <h1>Your Music.<br><span class="gradient-text">Everywhere.</span></h1>
+        <p>Upload once, reach millions. SonicVault distributes your music to Spotify, Apple Music, YouTube Music, and 200+ platforms globally. Keep 85% of your royalties.</p>
+        <div class="hero-buttons">
+            <a href="upload.html" class="btn btn-primary btn-large">
+                <i class="fa-solid fa-rocket"></i> Start Distributing Free
+            </a>
+            <a href="#how-it-works" class="btn btn-secondary btn-large">
+                <i class="fa-solid fa-play"></i> How It Works
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="number" data-count="50000">0</div>
+                <div class="label">Artists Worldwide</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number" data-count="200">0</div>
+                <div class="label">Streaming Platforms</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number" data-count="240">0</div>
+                <div class="label">Countries Reached</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number" data-count="10">0</div>
+                <div class="label">Million+ Streams</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SVG wave transition: dark hero → white body -->
+    <div class="hero-wave">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z" fill="#ffffff"/>
+        </svg>
+    </div>
+</section>
+
+<!-- ===== PLATFORM LOGOS ===== -->
+<section class="logo-strip">
+    <p class="logo-strip-label">Distribute to top platforms worldwide</p>
+    <div class="logo-track">
+        <div class="platform-logo"><span class="icon"><i class="fa-brands fa-spotify"></i></span> Spotify</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-brands fa-apple"></i></span> Apple Music</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-brands fa-youtube"></i></span> YouTube Music</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-brands fa-amazon"></i></span> Amazon Music</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-music"></i></span> JioSaavn</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-headphones"></i></span> Gaana</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-radio"></i></span> Wynk</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-brands fa-deezer"></i></span> Deezer</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-wave-square"></i></span> Tidal</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-compact-disc"></i></span> Hungama</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-podcast"></i></span> Shazam</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-globe"></i></span> 200+ More</div>
+        <!-- Duplicate for seamless scroll -->
+        <div class="platform-logo"><span class="icon"><i class="fa-brands fa-spotify"></i></span> Spotify</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-brands fa-apple"></i></span> Apple Music</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-brands fa-youtube"></i></span> YouTube Music</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-brands fa-amazon"></i></span> Amazon Music</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-music"></i></span> JioSaavn</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-headphones"></i></span> Gaana</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-radio"></i></span> Wynk</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-brands fa-deezer"></i></span> Deezer</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-wave-square"></i></span> Tidal</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-compact-disc"></i></span> Hungama</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-podcast"></i></span> Shazam</div>
+        <div class="platform-logo"><span class="icon"><i class="fa-solid fa-globe"></i></span> 200+ More</div>
+    </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="features" id="features">
+    <div class="container text-center">
+        <span class="section-badge"><i class="fa-solid fa-star"></i> Why Artists Choose Us</span>
+        <h2 class="section-title">Everything You Need to <span class="gradient-text">Launch Your Music</span></h2>
+        <p class="section-subtitle">From upload to worldwide streaming, we handle the heavy lifting so you can focus on making music.</p>
+
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon purple"><i class="fa-solid fa-globe"></i></div>
+                <h3>Global Distribution</h3>
+                <p>Distribute your music to 200+ streaming platforms including Spotify, Apple Music, YouTube Music, and major Indian DSPs like JioSaavn and Gaana.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon cyan"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>Real-Time Analytics</h3>
+                <p>Track your streams, listeners, and royalties in real time. See geographic data, demographic breakdowns, and revenue from every platform.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon pink"><i class="fa-solid fa-bullhorn"></i></div>
+                <h3>Playlist Pitching</h3>
+                <p>Get your music pitched to editorial playlists on Spotify, Apple Music, JioSaavn and more. Our team curates submissions to maximize placement.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon green"><i class="fa-solid fa-money-bill-wave"></i></div>
+                <h3>85% Royalties</h3>
+                <p>Keep 85% of all your streaming royalties. No hidden fees, no surprise deductions. Transparent quarterly payouts with no minimum threshold drama.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon orange"><i class="fa-brands fa-youtube"></i></div>
+                <h3>YouTube Content ID</h3>
+                <p>Automatically claim and monetize any YouTube video that uses your music. Content ID scans billions of videos to find your tracks and earn you money.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon blue"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h3>AI Marketing Tools</h3>
+                <p>Generate press releases, social media banners, smart links, QR codes, and pre-save campaigns automatically with our AI-powered promotion toolkit.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how-it-works" id="how-it-works">
+    <div class="container text-center">
+        <span class="section-badge"><i class="fa-solid fa-route"></i> Simple Process</span>
+        <h2 class="section-title">How It <span class="gradient-text">Works</span></h2>
+        <p class="section-subtitle">Get your music on every platform in 4 easy steps. No technical knowledge required.</p>
+
+        <div class="steps-container">
+            <div class="step-card reveal">
+                <div class="step-number">1</div>
+                <h3>Create Account</h3>
+                <p>Sign up for free in 30 seconds. No credit card required to get started.</p>
+            </div>
+            <div class="step-card reveal">
+                <div class="step-number">2</div>
+                <h3>Upload Music</h3>
+                <p>Upload your tracks, album art, and metadata. We accept WAV, MP3, and FLAC formats.</p>
+            </div>
+            <div class="step-card reveal">
+                <div class="step-number">3</div>
+                <h3>Review & Submit</h3>
+                <p>Preview how your release will look, accept the distribution agreement, and hit submit.</p>
+            </div>
+            <div class="step-card reveal">
+                <div class="step-number">4</div>
+                <h3>Go Live Worldwide</h3>
+                <p>Your music goes live on 200+ platforms within 7-21 days. Start earning royalties instantly.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="about" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-image reveal">
+                <img src="assets/images/artist-studio.png" alt="Artist in studio">
+            </div>
+            <div class="about-content reveal">
+                <span class="section-badge"><i class="fa-solid fa-heart"></i> Built For Artists</span>
+                <h2>We're More Than a <span class="gradient-text">Distributor</span></h2>
+                <p>SonicVault is the complete music ecosystem for independent artists. We don't just put your songs on streaming platforms — we help you build a career.</p>
+                <p>From global distribution to playlist pitching, radio promotion to brand partnerships, we give indie artists the same tools that major labels use.</p>
+                <div class="about-features">
+                    <div class="about-feature">
+                        <span class="check"><i class="fa-solid fa-check"></i></span>
+                        <span>Unlimited releases</span>
+                    </div>
+                    <div class="about-feature">
+                        <span class="check"><i class="fa-solid fa-check"></i></span>
+                        <span>240+ countries</span>
+                    </div>
+                    <div class="about-feature">
+                        <span class="check"><i class="fa-solid fa-check"></i></span>
+                        <span>Radio pitching</span>
+                    </div>
+                    <div class="about-feature">
+                        <span class="check"><i class="fa-solid fa-check"></i></span>
+                        <span>Brand licensing</span>
+                    </div>
+                    <div class="about-feature">
+                        <span class="check"><i class="fa-solid fa-check"></i></span>
+                        <span>Sync opportunities</span>
+                    </div>
+                    <div class="about-feature">
+                        <span class="check"><i class="fa-solid fa-check"></i></span>
+                        <span>Dedicated support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section class="pricing" id="pricing">
+    <div class="container text-center">
+        <span class="section-badge"><i class="fa-solid fa-tags"></i> Simple Pricing</span>
+        <h2 class="section-title">Plans That <span class="gradient-text">Grow With You</span></h2>
+        <p class="section-subtitle">Start free and upgrade when you're ready. No surprises, no hidden fees.</p>
+
+        <div class="pricing-grid">
+            <!-- Free -->
+            <div class="pricing-card reveal">
+                <div class="pricing-header">
+                    <h3>Free</h3>
+                    <p>Get started with the basics</p>
+                </div>
+                <div class="pricing-price">
+                    <span class="amount">₹0</span>
+                    <span class="period">/ forever</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Artist profile</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Upload to SonicVault</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Basic analytics</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Browse opportunities</li>
+                    <li class="disabled"><span class="icon"><i class="fa-solid fa-xmark"></i></span> Global distribution</li>
+                    <li class="disabled"><span class="icon"><i class="fa-solid fa-xmark"></i></span> YouTube Content ID</li>
+                    <li class="disabled"><span class="icon"><i class="fa-solid fa-xmark"></i></span> Playlist pitching</li>
+                    <li class="disabled"><span class="icon"><i class="fa-solid fa-xmark"></i></span> AI marketing tools</li>
+                </ul>
+                <a href="upload.html" class="btn btn-secondary">Get Started</a>
+            </div>
+
+            <!-- Pro -->
+            <div class="pricing-card popular reveal">
+                <span class="popular-badge">Most Popular</span>
+                <div class="pricing-header">
+                    <h3>Pro Artist</h3>
+                    <p>Everything to launch your career</p>
+                </div>
+                <div class="pricing-price">
+                    <span class="amount gradient-text">₹1,999</span>
+                    <span class="period">/ year</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Everything in Free</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> <strong>Unlimited</strong> global distribution</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> YouTube Content ID</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Playlist pitching</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> AI press releases & banners</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Smart links & QR codes</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> <strong>85%</strong> royalty split</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Priority support</li>
+                </ul>
+                <a href="upload.html" class="btn btn-primary">Go Pro Now</a>
+            </div>
+
+            <!-- Label -->
+            <div class="pricing-card reveal">
+                <div class="pricing-header">
+                    <h3>Label</h3>
+                    <p>For labels managing multiple artists</p>
+                </div>
+                <div class="pricing-price">
+                    <span class="amount">₹9,999</span>
+                    <span class="period">/ year</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Everything in Pro</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> <strong>Unlimited</strong> artist accounts</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Dedicated account manager</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Bulk release tools</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> White-label reports</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> Brand partnership access</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> <strong>90%</strong> royalty split</li>
+                    <li><span class="icon"><i class="fa-solid fa-check"></i></span> SLA-backed support</li>
+                </ul>
+                <a href="upload.html" class="btn btn-secondary">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="testimonials" id="testimonials">
+    <div class="container text-center">
+        <span class="section-badge"><i class="fa-solid fa-quote-left"></i> Artist Stories</span>
+        <h2 class="section-title">Loved By <span class="gradient-text">Artists</span></h2>
+        <p class="section-subtitle">Join thousands of independent artists who trust SonicVault with their music career.</p>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card reveal">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"SonicVault made it so easy to get my music on Spotify and Apple Music. Within 2 weeks my songs were live everywhere. The playlist pitching got me 50K streams on my first single!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">RP</div>
+                    <div class="testimonial-info">
+                        <h4>Rahul Patel</h4>
+                        <p>Singer-Songwriter, Mumbai</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"The AI marketing tools are game-changing. I generated press releases, social media banners, and smart links in minutes. It's like having a marketing team in my pocket."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">AM</div>
+                    <div class="testimonial-info">
+                        <h4>Ananya Mehta</h4>
+                        <p>Indie Pop Artist, Delhi</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"As a label manager, the bulk upload tools and analytics dashboard save me hours every week. Managing 20+ artists from one dashboard is incredible. Best platform in India."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">VK</div>
+                    <div class="testimonial-info">
+                        <h4>Vikram Kapoor</h4>
+                        <p>Label Owner, Bangalore</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+    <div class="container text-center">
+        <span class="section-badge"><i class="fa-solid fa-circle-question"></i> FAQ</span>
+        <h2 class="section-title">Frequently <span class="gradient-text">Asked</span></h2>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">
+                    How long does it take for my music to go live?
+                    <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Typically, your music will be live on all major platforms within 7-21 business days. We recommend submitting at least 21 days before your release date to ensure timely delivery and allow time for playlist pitching.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    What file formats do you accept?
+                    <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        We accept WAV (recommended for best quality), MP3 (320kbps minimum), and FLAC formats. Album artwork should be a minimum of 3000x3000 pixels in JPG or PNG format.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    How do royalty payments work?
+                    <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Royalties are calculated monthly and paid out quarterly. You keep 85% (Pro) or 90% (Label) of all streaming revenue. Payments are made via bank transfer with a minimum threshold of ₹100. You can track your earnings in real-time on your dashboard.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can I distribute already-released music?
+                    <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Yes! You can distribute previously released music as long as you own the rights or have proper authorization. If your music was previously distributed by another aggregator, make sure to remove it from their platform first to avoid conflicts.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Do I keep ownership of my music?
+                    <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Absolutely. You retain 100% ownership of your masters and publishing. SonicVault is a non-exclusive distribution partner — you can remove your music anytime and you're free to work with other platforms simultaneously.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    What is YouTube Content ID?
+                    <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        YouTube Content ID is a system that automatically scans all YouTube uploads to find videos that use your music. When detected, you can choose to monetize those videos (earn ad revenue) or block them. This lets you earn money even when other people use your music in their YouTube videos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Ready to Share Your <span class="gradient-text">Music With the World?</span></h2>
+            <p>Join 50,000+ artists who trust SonicVault to distribute their music globally.</p>
+            <a href="upload.html" class="btn btn-primary btn-large">
+                <i class="fa-solid fa-rocket"></i> Start For Free
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="nav-logo">
+                    <img src="assets/images/logo.png" alt="SonicVault Logo">
+                    <span class="logo-text">Sonic<span>Vault</span></span>
+                </a>
+                <p>The ultimate music distribution platform for independent artists. Distribute, promote, and monetize your music worldwide.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Platform</h4>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="upload.html">Upload Music</a>
+                <a href="#">Dashboard</a>
+                <a href="#">Analytics</a>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <a href="#">Blog</a>
+                <a href="#">Help Center</a>
+                <a href="#">Artist Guide</a>
+                <a href="#">API Docs</a>
+                <a href="#">Status Page</a>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <a href="#about">About Us</a>
+                <a href="#">Careers</a>
+                <a href="#">Contact</a>
+                <a href="agreement.html">Agreement</a>
+                <a href="#">Press Kit</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SonicVault. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="agreement.html">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

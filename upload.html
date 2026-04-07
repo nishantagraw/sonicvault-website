@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Music — SonicVault</title>
+    <meta name="description" content="Upload your music to SonicVault and distribute to 200+ streaming platforms worldwide. Easy upload, fast delivery.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar scrolled" id="navbar" style="background: rgba(255,255,255,0.95);">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <img src="assets/images/logo.png" alt="SonicVault Logo">
+            <span class="logo-text">Sonic<span>Vault</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#features">Features</a>
+            <a href="index.html#pricing">Pricing</a>
+            <a href="upload.html" class="active">Upload Music</a>
+            <a href="agreement.html">Agreement</a>
+        </div>
+        <div class="nav-actions">
+            <a href="upload.html" class="btn btn-primary">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Get Started
+            </a>
+        </div>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose"><i class="fa-solid fa-xmark"></i></button>
+    <a href="index.html">Home</a>
+    <a href="index.html#features">Features</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="upload.html">Upload Music</a>
+    <a href="agreement.html">Agreement</a>
+</div>
+
+<!-- ===== PAGE HEADER ===== -->
+<div class="page-header">
+    <h1><i class="fa-solid fa-cloud-arrow-up" style="margin-right: 12px; opacity: 0.7;"></i> Upload Your <span class="gradient-text">Music</span></h1>
+    <p>Fill in your release details, upload your tracks, and we'll handle the rest.</p>
+</div>
+
+<!-- ===== UPLOAD FORM ===== -->
+<div class="upload-container">
+
+    <!-- Progress Bar -->
+    <div class="upload-progress" id="uploadProgress">
+        <div class="progress-step active" data-step="1">
+            <div class="step-dot">1</div>
+            <span class="step-label">Details</span>
+        </div>
+        <div class="progress-line" id="line1"></div>
+        <div class="progress-step" data-step="2">
+            <div class="step-dot">2</div>
+            <span class="step-label">Upload</span>
+        </div>
+        <div class="progress-line" id="line2"></div>
+        <div class="progress-step" data-step="3">
+            <div class="step-dot">3</div>
+            <span class="step-label">Agreement</span>
+        </div>
+        <div class="progress-line" id="line3"></div>
+        <div class="progress-step" data-step="4">
+            <div class="step-dot">4</div>
+            <span class="step-label">Submit</span>
+        </div>
+    </div>
+
+    <!-- Step 1: Song Details -->
+    <div class="form-step active" id="step1">
+        <div class="form-card">
+            <h2 style="margin-bottom: 8px; font-size: 1.4rem;"><i class="fa-solid fa-music" style="color: var(--accent-purple); margin-right: 8px;"></i> Release Details</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 0.93rem;">Tell us about your release. All fields marked with * are required.</p>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Song / Album Title <span class="required">*</span></label>
+                    <input type="text" id="songTitle" placeholder="e.g. Midnight Echoes" required>
+                </div>
+                <div class="form-group">
+                    <label>Artist / Band Name <span class="required">*</span></label>
+                    <input type="text" id="artistName" placeholder="e.g. The Midnight Sky" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Release Type <span class="required">*</span></label>
+                    <select id="releaseType" required>
+                        <option value="">Select type...</option>
+                        <option value="single">Single</option>
+                        <option value="ep">EP (2-6 tracks)</option>
+                        <option value="album">Album (7+ tracks)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Primary Genre <span class="required">*</span></label>
+                    <select id="genre" required>
+                        <option value="">Select genre...</option>
+                        <option value="pop">Pop</option>
+                        <option value="hiphop">Hip Hop / Rap</option>
+                        <option value="rock">Rock</option>
+                        <option value="rnb">R&B / Soul</option>
+                        <option value="electronic">Electronic / EDM</option>
+                        <option value="indie">Indie</option>
+                        <option value="classical">Classical / Instrumental</option>
+                        <option value="bollywood">Bollywood / Filmi</option>
+                        <option value="punjabi">Punjabi</option>
+                        <option value="devotional">Devotional / Spiritual</option>
+                        <option value="folk">Folk / Regional</option>
+                        <option value="jazz">Jazz</option>
+                        <option value="metal">Metal</option>
+                        <option value="country">Country</option>
+                        <option value="lofi">Lo-Fi / Chill</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Language <span class="required">*</span></label>
+                    <select id="language" required>
+                        <option value="">Select language...</option>
+                        <option value="hindi">Hindi</option>
+                        <option value="english">English</option>
+                        <option value="punjabi">Punjabi</option>
+                        <option value="tamil">Tamil</option>
+                        <option value="telugu">Telugu</option>
+                        <option value="bengali">Bengali</option>
+                        <option value="marathi">Marathi</option>
+                        <option value="kannada">Kannada</option>
+                        <option value="malayalam">Malayalam</option>
+                        <option value="gujarati">Gujarati</option>
+                        <option value="instrumental">Instrumental (No vocals)</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Release Date <span class="required">*</span></label>
+                    <input type="date" id="releaseDate" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Composer / Music Producer</label>
+                    <input type="text" id="composer" placeholder="e.g. John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Lyricist</label>
+                    <input type="text" id="lyricist" placeholder="e.g. Jane Smith">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Description / About this release</label>
+                <textarea id="description" placeholder="Tell listeners about your song, the inspiration behind it, or any special notes..."></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email <span class="required">*</span></label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+91 9876543210">
+                </div>
+            </div>
+
+            <div class="form-nav">
+                <div></div>
+                <button class="btn btn-primary" onclick="nextStep(2)">
+                    Continue <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Upload Files -->
+    <div class="form-step" id="step2">
+        <div class="form-card">
+            <h2 style="margin-bottom: 8px; font-size: 1.4rem;"><i class="fa-solid fa-file-audio" style="color: var(--accent-cyan); margin-right: 8px;"></i> Upload Files</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 0.93rem;">Upload your audio tracks and album artwork.</p>
+
+            <!-- Audio Upload -->
+            <div class="form-group">
+                <label><i class="fa-solid fa-headphones" style="margin-right: 6px;"></i> Audio Track(s) <span class="required">*</span></label>
+                <div class="upload-zone" id="audioDropZone" onclick="document.getElementById('audioInput').click()">
+                    <div class="upload-icon">🎵</div>
+                    <h3>Drop your audio files here</h3>
+                    <p>or <span class="browse-btn">browse files</span> from your computer</p>
+                    <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">Accepted formats: WAV, MP3 (320kbps), FLAC — Max 100MB per file</p>
+                </div>
+                <input type="file" id="audioInput" accept=".wav,.mp3,.flac" multiple hidden>
+                <div class="upload-preview" id="audioPreview">
+                    <span class="file-icon">🎵</span>
+                    <div class="file-info">
+                        <div class="name" id="audioFileName">track.wav</div>
+                        <div class="size" id="audioFileSize">12.4 MB</div>
+                    </div>
+                    <button class="remove-file" onclick="removeAudio()" title="Remove file"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+
+            <!-- Album Art Upload -->
+            <div class="form-group">
+                <label><i class="fa-solid fa-image" style="margin-right: 6px;"></i> Album Artwork <span class="required">*</span></label>
+                <div class="art-upload">
+                    <div class="art-preview" id="artPreview" onclick="document.getElementById('artInput').click()">
+                        <img id="artImage" alt="Album art preview">
+                        <div class="placeholder" id="artPlaceholder">
+                            <span class="icon">🖼️</span>
+                            Click to upload
+                        </div>
+                    </div>
+                    <input type="file" id="artInput" accept="image/jpeg, image/png" hidden>
+                    <div class="art-specs">
+                        <h4>Artwork Requirements</h4>
+                        <ul>
+                            <li>Minimum 3000 × 3000 pixels</li>
+                            <li>Square format (1:1 ratio)</li>
+                            <li>JPG or PNG format</li>
+                            <li>Max file size: 20MB</li>
+                            <li>No blurry or pixelated images</li>
+                            <li>No website URLs or social handles</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-nav">
+                <button class="btn btn-secondary" onclick="prevStep(1)">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </button>
+                <button class="btn btn-primary" onclick="nextStep(3)">
+                    Continue <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Agreement -->
+    <div class="form-step" id="step3">
+        <div class="form-card">
+            <h2 style="margin-bottom: 8px; font-size: 1.4rem;"><i class="fa-solid fa-file-contract" style="color: var(--accent-green); margin-right: 8px;"></i> Distribution Agreement</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 0.93rem;">Please read and accept the distribution agreement to proceed.</p>
+
+            <div class="agreement-box">
+                <h3>1. Grant of Rights</h3>
+                <p>By submitting your content through SonicVault, you grant SonicVault a non-exclusive, worldwide license to distribute, deliver, and make available your musical works and associated metadata to digital music services, streaming platforms, and download stores ("Platforms").</p>
+
+                <h3>2. Ownership & Warranties</h3>
+                <p>You represent and warrant that:</p>
+                <ol>
+                    <li>You are the rightful owner or authorized representative of the content being submitted.</li>
+                    <li>The content does not infringe upon any third-party intellectual property rights, copyrights, trademarks, or other proprietary rights.</li>
+                    <li>You have obtained all necessary permissions, licenses, and clearances for any samples, covers, or third-party content included in your submission.</li>
+                    <li>The content complies with all applicable laws and regulations.</li>
+                </ol>
+
+                <h3>3. Revenue & Royalties</h3>
+                <p>SonicVault shall collect all revenue generated from the distribution of your content across Platforms. Revenue shall be shared as follows:</p>
+                <ol>
+                    <li><strong>Pro Plan:</strong> 85% to Artist / 15% to SonicVault</li>
+                    <li><strong>Label Plan:</strong> 90% to Label / 10% to SonicVault</li>
+                    <li>Royalties are calculated monthly and paid out quarterly via bank transfer.</li>
+                    <li>Minimum payout threshold: ₹100 INR (or equivalent).</li>
+                </ol>
+
+                <h3>4. Term & Termination</h3>
+                <p>This agreement is effective upon submission and remains in force for the duration of your active subscription. Either party may terminate with 30 days written notice. Upon termination, SonicVault will initiate takedown of your content from all Platforms within 5-10 business days.</p>
+
+                <h3>5. Content Removal</h3>
+                <p>SonicVault reserves the right to refuse or remove content that violates these terms, infringes on third-party rights, or is deemed inappropriate. You may request removal of your content at any time through your dashboard.</p>
+
+                <h3>6. Limitation of Liability</h3>
+                <p>SonicVault shall not be liable for any indirect, incidental, special, or consequential damages arising from the use of the platform, including but not limited to loss of revenue, data, or business opportunities. Total liability shall not exceed the fees paid by you in the preceding 12 months.</p>
+
+                <h3>7. Governing Law</h3>
+                <p>This agreement shall be governed by and construed in accordance with the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in New Delhi, India.</p>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="agreeTerms">
+                <label for="agreeTerms">I have read, understood, and agree to the <strong>SonicVault Distribution Agreement</strong> and confirm that I own all rights to the content being submitted.</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="agreeAge">
+                <label for="agreeAge">I confirm that I am at least 18 years of age, or have parental/guardian consent to enter into this agreement.</label>
+            </div>
+
+            <div class="form-nav">
+                <button class="btn btn-secondary" onclick="prevStep(2)">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </button>
+                <button class="btn btn-primary" onclick="nextStep(4)" id="agreeBtn" disabled style="opacity: 0.5;">
+                    Accept & Continue <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 4: Review & Submit -->
+    <div class="form-step" id="step4">
+        <div class="form-card">
+            <h2 style="margin-bottom: 8px; font-size: 1.4rem;"><i class="fa-solid fa-paper-plane" style="color: var(--accent-orange); margin-right: 8px;"></i> Review & Submit</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 0.93rem;">Review your release details before submitting.</p>
+
+            <div id="reviewContent" style="margin-bottom: 30px;"></div>
+
+            <div class="form-nav">
+                <button class="btn btn-secondary" onclick="prevStep(3)">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </button>
+                <button class="btn btn-primary btn-large" onclick="submitRelease()">
+                    <i class="fa-solid fa-rocket"></i> Submit Release
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success State -->
+    <div class="upload-success" id="successState">
+        <div class="form-card">
+            <div class="success-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2>Release Submitted <span class="gradient-text">Successfully!</span></h2>
+            <p>Your music is now being processed. We'll review your submission and distribute it to 200+ platforms within 7-21 business days. You'll receive an email confirmation shortly.</p>
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="index.html" class="btn btn-secondary"><i class="fa-solid fa-house"></i> Back to Home</a>
+                <a href="upload.html" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Upload Another</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+            <p>&copy; 2026 SonicVault. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="agreement.html">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
