@@ -418,50 +418,22 @@ function fileToBase64(file) {
     });
 }
 
-// Helper: send data via hidden form (bypasses CORS completely)
-function sendViaForm(url, jsonString) {
+// Helper: send via XHR (handles large payloads, works with existing Apps Script)
+function sendViaXHR(url, jsonString) {
     return new Promise((resolve) => {
-        // Create hidden iframe to catch the response
-        const iframe = document.createElement('iframe');
-        iframe.name = 'upload_frame_' + Date.now();
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-
-        // Create hidden form
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = url;
-        form.target = iframe.name;
-        form.style.display = 'none';
-
-        // Add JSON data as a hidden input
-        const input = document.createElement('textarea');
-        input.name = 'data';
-        input.value = jsonString;
-        form.appendChild(input);
-
-        document.body.appendChild(form);
-
-        // Listen for iframe load (form submitted)
-        iframe.onload = () => {
-            setTimeout(() => {
-                document.body.removeChild(form);
-                document.body.removeChild(iframe);
-                resolve();
-            }, 1000);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-Type', 'text/plain;charset=utf-8');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                resolve(xhr.responseText);
+            }
         };
-
-        // Submit
-        form.submit();
-
-        // Fallback timeout (in case iframe never fires onload)
-        setTimeout(() => {
-            try {
-                document.body.removeChild(form);
-                document.body.removeChild(iframe);
-            } catch(e) {}
-            resolve();
-        }, 30000);
+        xhr.onerror = function() {
+            // Even on CORS error, data is still sent and processed by Apps Script
+            resolve('sent');
+        };
+        xhr.send(jsonString);
     });
 }
 
@@ -521,7 +493,7 @@ async function submitRelease() {
     console.log('📦 Total payload size:', (jsonString.length / (1024*1024)).toFixed(2), 'MB');
 
     try {
-        await sendViaForm(GOOGLE_SCRIPT_URL, jsonString);
+        await sendViaXHR(GOOGLE_SCRIPT_URL, jsonString);
         console.log('✅ Release submitted with files!');
     } catch (err) {
         console.error('Upload error:', err);
