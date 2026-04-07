@@ -209,11 +209,14 @@ h1, h2, h3, h4, h5, h6 {
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: -0.5px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav-logo img {
@@ -290,6 +293,8 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.5rem;
   cursor: pointer;
   padding: 8px;
+  z-index: 1001;
+  position: relative;
 }
 
 .navbar:not(.scrolled) .mobile-toggle {
@@ -305,7 +310,7 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
   bottom: 0;
   background: rgba(255, 255, 255, 0.98);
-  z-index: 999;
+  z-index: 1100;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -1742,6 +1747,10 @@ h1, h2, h3, h4, h5, h6 {
   .hero-equalizer { gap: 3px; }
 
   :root { --section-padding: 60px 0; }
+
+  .nav-logo img { width: 40px; }
+  .nav-logo { font-size: 1.1rem; gap: 6px; }
+  .nav-logo .logo-text { display: none; }
 }
 
 @media (max-width: 480px) {
