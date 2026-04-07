@@ -428,9 +428,9 @@ function submitRelease() {
     console.log('🖼️ Art File:', artFile);
 
     // Store in localStorage for now
-    const releases = JSON.parse(localStorage.getItem('sonicvault_releases') || '[]');
+    const releases = JSON.parse(localStorage.getItem('revomusic_releases') || '[]');
     releases.push(formData);
-    localStorage.setItem('sonicvault_releases', JSON.stringify(releases));
+    localStorage.setItem('revomusic_releases', JSON.stringify(releases));
 
     // Show success
     document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
