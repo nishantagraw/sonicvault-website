@@ -402,15 +402,32 @@ function buildReview() {
     container.innerHTML = html;
 }
 
-// ===== SUBMIT RELEASE TO GOOGLE SHEETS =====
-// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+// ===== SUBMIT RELEASE TO GOOGLE SHEETS + DRIVE =====
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxeT40Ofo4U3eKv66Uv5KnR8mjVm7eckqE8wH2jvWN-C3VITzalMQ8rfwqlW6B_fnRZRQ/exec';
 
-function submitRelease() {
+// Helper: convert file to base64
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            // Remove the data:xxx;base64, prefix
+            const base64 = reader.result.split(',')[1];
+            resolve(base64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+async function submitRelease() {
     const submitBtn = document.querySelector('#step4 .btn-primary');
     const originalText = submitBtn.innerHTML;
 
-    // Collect all form data
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Converting files...';
+
+    // Collect form data
     const formData = {
         songTitle: document.getElementById('songTitle')?.value || '',
         artistName: document.getElementById('artistName')?.value || '',
@@ -428,55 +445,62 @@ function submitRelease() {
         timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
     };
 
-    // Show loading state
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
-
-    // Send to Google Sheets (text/plain is required for no-cors mode)
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(formData)
-    })
-    .then(() => {
-        console.log('✅ Release submitted to Google Sheets:', formData);
-
-        // Also backup in localStorage
-        const releases = JSON.parse(localStorage.getItem('revomusic_releases') || '[]');
-        releases.push(formData);
-        localStorage.setItem('revomusic_releases', JSON.stringify(releases));
-
-        // Show success
-        document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
-        document.querySelector('.upload-progress').style.display = 'none';
-        const successState = document.getElementById('successState');
-        if (successState) {
-            successState.classList.add('show');
+    // Convert audio file to base64
+    if (audioFile) {
+        try {
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encoding audio...';
+            formData.audioBase64 = await fileToBase64(audioFile);
+            formData.audioMimeType = audioFile.type || 'audio/mpeg';
+        } catch (err) {
+            console.error('Audio encode error:', err);
         }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    })
-    .catch(err => {
-        console.error('❌ Submission error:', err);
-        
-        // Still save locally as backup
-        const releases = JSON.parse(localStorage.getItem('revomusic_releases') || '[]');
-        releases.push(formData);
-        localStorage.setItem('revomusic_releases', JSON.stringify(releases));
+    }
 
-        // Still show success (no-cors won't give us response, so we assume success)
-        document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
-        document.querySelector('.upload-progress').style.display = 'none';
-        const successState = document.getElementById('successState');
-        if (successState) {
-            successState.classList.add('show');
+    // Convert art file to base64
+    if (artFile) {
+        try {
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encoding artwork...';
+            formData.artBase64 = await fileToBase64(artFile);
+            formData.artMimeType = artFile.type || 'image/jpeg';
+        } catch (err) {
+            console.error('Art encode error:', err);
         }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    })
-    .finally(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-    });
+    }
+
+    // Upload to Google Sheets + Drive
+    submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up fa-bounce"></i> Uploading to cloud...';
+
+    try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(formData)
+        });
+
+        console.log('✅ Release submitted with files!');
+    } catch (err) {
+        console.error('Upload error:', err);
+    }
+
+    // Backup in localStorage (without base64 to save space)
+    const backupData = { ...formData };
+    delete backupData.audioBase64;
+    delete backupData.artBase64;
+    const releases = JSON.parse(localStorage.getItem('revomusic_releases') || '[]');
+    releases.push(backupData);
+    localStorage.setItem('revomusic_releases', JSON.stringify(releases));
+
+    // Show success
+    document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+    document.querySelector('.upload-progress').style.display = 'none';
+    const successState = document.getElementById('successState');
+    if (successState) {
+        successState.classList.add('show');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
 }
 
 // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====

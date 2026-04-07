@@ -1,27 +1,75 @@
 // ============================================
-// GOOGLE APPS SCRIPT — REVOMUSIC
+// GOOGLE APPS SCRIPT — REVOMUSIC (WITH FILE UPLOAD)
 // ============================================
-// IMPORTANT: After making changes, you MUST redeploy:
-// Deploy > Manage deployments > Edit (pencil icon) >
-// Version: "New version" > Deploy
+// Saves actual audio & art files to Google Drive
+// and puts Drive links in the Google Sheet.
+//
+// AFTER PASTING: Deploy > Manage deployments >
+// Edit > Version: "New version" > Deploy
 // ============================================
+
+// Google Drive folder to store uploads
+var DRIVE_FOLDER_NAME = "RevoMusic Uploads";
+
+function getOrCreateFolder() {
+  var folders = DriveApp.getFoldersByName(DRIVE_FOLDER_NAME);
+  if (folders.hasNext()) {
+    return folders.next();
+  }
+  return DriveApp.createFolder(DRIVE_FOLDER_NAME);
+}
 
 function doPost(e) {
   try {
     var sheet = SpreadsheetApp.openById('1Gq9ohKosrMs9FY_f9sA1t-Om8ahH_EQMAdLw3k9y6Cg').getActiveSheet();
-    
-    // Parse the incoming data
-    var data;
-    try {
-      data = JSON.parse(e.postData.contents);
-    } catch(err) {
-      // Try parameter-based approach
-      data = e.parameter;
-    }
+    var data = JSON.parse(e.postData.contents);
     
     // Create headers if sheet is empty
     if (sheet.getLastRow() === 0) {
       setupHeaders();
+    }
+    
+    var folder = getOrCreateFolder();
+    
+    // Create a subfolder for this release
+    var artistName = data.artistName || "Unknown";
+    var songTitle = data.songTitle || "Untitled";
+    var subFolderName = artistName + " - " + songTitle + " (" + new Date().toLocaleDateString('en-IN') + ")";
+    var subFolder = folder.createFolder(subFolderName);
+    
+    var audioLink = "";
+    var artLink = "";
+    
+    // Save audio file to Drive
+    if (data.audioBase64 && data.audioFileName) {
+      try {
+        var audioBlob = Utilities.newBlob(
+          Utilities.base64Decode(data.audioBase64),
+          data.audioMimeType || "audio/mpeg",
+          data.audioFileName
+        );
+        var audioFile = subFolder.createFile(audioBlob);
+        audioFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+        audioLink = audioFile.getUrl();
+      } catch(err) {
+        audioLink = "Upload failed: " + err.toString();
+      }
+    }
+    
+    // Save album art to Drive
+    if (data.artBase64 && data.artFileName) {
+      try {
+        var artBlob = Utilities.newBlob(
+          Utilities.base64Decode(data.artBase64),
+          data.artMimeType || "image/jpeg",
+          data.artFileName
+        );
+        var artFile = subFolder.createFile(artBlob);
+        artFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+        artLink = artFile.getUrl();
+      } catch(err) {
+        artLink = "Upload failed: " + err.toString();
+      }
     }
     
     // Append data row
@@ -38,8 +86,9 @@ function doPost(e) {
       data.email || "",
       data.phone || "",
       data.description || "",
-      data.audioFileName || "",
-      data.artFileName || "",
+      audioLink || data.audioFileName || "",
+      artLink || data.artFileName || "",
+      subFolder.getUrl(),
       "Pending Review"
     ];
     
@@ -65,6 +114,10 @@ function doGet(e) {
 // Run this function ONCE manually to create headers
 function setupHeaders() {
   var sheet = SpreadsheetApp.openById('1Gq9ohKosrMs9FY_f9sA1t-Om8ahH_EQMAdLw3k9y6Cg').getActiveSheet();
+  
+  // Clear existing content
+  sheet.clear();
+  
   var headers = [
     "Timestamp",
     "Song/Album Title", 
@@ -78,8 +131,9 @@ function setupHeaders() {
     "Email",
     "Phone",
     "Description",
-    "Audio File Name",
-    "Album Art File Name",
+    "Audio File (Drive Link)",
+    "Album Art (Drive Link)",
+    "Release Folder",
     "Status"
   ];
   
@@ -96,7 +150,12 @@ function setupHeaders() {
   for (var i = 1; i <= headers.length; i++) {
     sheet.setColumnWidth(i, 150);
   }
-  sheet.setColumnWidth(1, 200);
+  sheet.setColumnWidth(1, 180);
   sheet.setColumnWidth(2, 200);
   sheet.setColumnWidth(12, 250);
+  sheet.setColumnWidth(13, 250);
+  sheet.setColumnWidth(14, 250);
+  sheet.setColumnWidth(15, 250);
+  
+  SpreadsheetApp.getActiveSpreadsheet().toast("Headers created!", "Setup Complete");
 }
