@@ -410,7 +410,6 @@ function fileToBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => {
-            // Remove the data:xxx;base64, prefix
             const base64 = reader.result.split(',')[1];
             resolve(base64);
         };
@@ -419,13 +418,59 @@ function fileToBase64(file) {
     });
 }
 
+// Helper: send data via hidden form (bypasses CORS completely)
+function sendViaForm(url, jsonString) {
+    return new Promise((resolve) => {
+        // Create hidden iframe to catch the response
+        const iframe = document.createElement('iframe');
+        iframe.name = 'upload_frame_' + Date.now();
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        // Create hidden form
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+        form.target = iframe.name;
+        form.style.display = 'none';
+
+        // Add JSON data as a hidden input
+        const input = document.createElement('textarea');
+        input.name = 'data';
+        input.value = jsonString;
+        form.appendChild(input);
+
+        document.body.appendChild(form);
+
+        // Listen for iframe load (form submitted)
+        iframe.onload = () => {
+            setTimeout(() => {
+                document.body.removeChild(form);
+                document.body.removeChild(iframe);
+                resolve();
+            }, 1000);
+        };
+
+        // Submit
+        form.submit();
+
+        // Fallback timeout (in case iframe never fires onload)
+        setTimeout(() => {
+            try {
+                document.body.removeChild(form);
+                document.body.removeChild(iframe);
+            } catch(e) {}
+            resolve();
+        }, 30000);
+    });
+}
+
 async function submitRelease() {
     const submitBtn = document.querySelector('#step4 .btn-primary');
     const originalText = submitBtn.innerHTML;
 
-    // Show loading state
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Converting files...';
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Preparing files...';
 
     // Collect form data
     const formData = {
@@ -448,9 +493,10 @@ async function submitRelease() {
     // Convert audio file to base64
     if (audioFile) {
         try {
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encoding audio...';
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encoding audio (' + (audioFile.size / (1024*1024)).toFixed(1) + ' MB)...';
             formData.audioBase64 = await fileToBase64(audioFile);
             formData.audioMimeType = audioFile.type || 'audio/mpeg';
+            console.log('✅ Audio encoded:', formData.audioFileName, '- Base64 length:', formData.audioBase64.length);
         } catch (err) {
             console.error('Audio encode error:', err);
         }
@@ -462,28 +508,26 @@ async function submitRelease() {
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encoding artwork...';
             formData.artBase64 = await fileToBase64(artFile);
             formData.artMimeType = artFile.type || 'image/jpeg';
+            console.log('✅ Art encoded:', formData.artFileName, '- Base64 length:', formData.artBase64.length);
         } catch (err) {
             console.error('Art encode error:', err);
         }
     }
 
-    // Upload to Google Sheets + Drive
+    // Upload via hidden form (works with large files, no CORS issues)
     submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up fa-bounce"></i> Uploading to cloud...';
+    
+    const jsonString = JSON.stringify(formData);
+    console.log('📦 Total payload size:', (jsonString.length / (1024*1024)).toFixed(2), 'MB');
 
     try {
-        await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(formData)
-        });
-
+        await sendViaForm(GOOGLE_SCRIPT_URL, jsonString);
         console.log('✅ Release submitted with files!');
     } catch (err) {
         console.error('Upload error:', err);
     }
 
-    // Backup in localStorage (without base64 to save space)
+    // Backup in localStorage (without base64)
     const backupData = { ...formData };
     delete backupData.audioBase64;
     delete backupData.artBase64;

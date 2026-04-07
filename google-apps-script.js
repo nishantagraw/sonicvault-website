@@ -1,15 +1,12 @@
 // ============================================
 // GOOGLE APPS SCRIPT — REVOMUSIC (WITH FILE UPLOAD)
 // ============================================
-// Saves actual audio & art files to Google Drive
-// and puts Drive links in the Google Sheet.
-//
 // AFTER PASTING: Deploy > Manage deployments >
 // Edit > Version: "New version" > Deploy
 // ============================================
 
-// Google Drive folder to store uploads
 var DRIVE_FOLDER_NAME = "RevoMusic Uploads";
+var SHEET_ID = '1Gq9ohKosrMs9FY_f9sA1t-Om8ahH_EQMAdLw3k9y6Cg';
 
 function getOrCreateFolder() {
   var folders = DriveApp.getFoldersByName(DRIVE_FOLDER_NAME);
@@ -21,8 +18,27 @@ function getOrCreateFolder() {
 
 function doPost(e) {
   try {
-    var sheet = SpreadsheetApp.openById('1Gq9ohKosrMs9FY_f9sA1t-Om8ahH_EQMAdLw3k9y6Cg').getActiveSheet();
-    var data = JSON.parse(e.postData.contents);
+    var sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+    
+    // Parse data - handle both JSON body and form parameter
+    var data;
+    try {
+      // Try form parameter first (from hidden form submission)
+      if (e.parameter && e.parameter.data) {
+        data = JSON.parse(e.parameter.data);
+      }
+      // Then try raw body (from fetch)
+      else if (e.postData && e.postData.contents) {
+        data = JSON.parse(e.postData.contents);
+      }
+    } catch(err) {
+      // Last resort
+      data = e.parameter || {};
+    }
+    
+    if (!data || !data.timestamp) {
+      return ContentService.createTextOutput(JSON.stringify({status:"error", message:"No data received"})).setMimeType(ContentService.MimeType.JSON);
+    }
     
     // Create headers if sheet is empty
     if (sheet.getLastRow() === 0) {
@@ -31,7 +47,7 @@ function doPost(e) {
     
     var folder = getOrCreateFolder();
     
-    // Create a subfolder for this release
+    // Create subfolder for this release
     var artistName = data.artistName || "Unknown";
     var songTitle = data.songTitle || "Untitled";
     var subFolderName = artistName + " - " + songTitle + " (" + new Date().toLocaleDateString('en-IN') + ")";
@@ -43,33 +59,31 @@ function doPost(e) {
     // Save audio file to Drive
     if (data.audioBase64 && data.audioFileName) {
       try {
-        var audioBlob = Utilities.newBlob(
-          Utilities.base64Decode(data.audioBase64),
-          data.audioMimeType || "audio/mpeg",
-          data.audioFileName
-        );
+        var audioBytes = Utilities.base64Decode(data.audioBase64);
+        var audioBlob = Utilities.newBlob(audioBytes, data.audioMimeType || "audio/mpeg", data.audioFileName);
         var audioFile = subFolder.createFile(audioBlob);
         audioFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
         audioLink = audioFile.getUrl();
       } catch(err) {
         audioLink = "Upload failed: " + err.toString();
       }
+    } else {
+      audioLink = data.audioFileName || "No file";
     }
     
     // Save album art to Drive
     if (data.artBase64 && data.artFileName) {
       try {
-        var artBlob = Utilities.newBlob(
-          Utilities.base64Decode(data.artBase64),
-          data.artMimeType || "image/jpeg",
-          data.artFileName
-        );
+        var artBytes = Utilities.base64Decode(data.artBase64);
+        var artBlob = Utilities.newBlob(artBytes, data.artMimeType || "image/jpeg", data.artFileName);
         var artFile = subFolder.createFile(artBlob);
         artFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
         artLink = artFile.getUrl();
       } catch(err) {
         artLink = "Upload failed: " + err.toString();
       }
+    } else {
+      artLink = data.artFileName || "No file";
     }
     
     // Append data row
@@ -86,22 +100,19 @@ function doPost(e) {
       data.email || "",
       data.phone || "",
       data.description || "",
-      audioLink || data.audioFileName || "",
-      artLink || data.artFileName || "",
+      audioLink,
+      artLink,
       subFolder.getUrl(),
       "Pending Review"
     ];
     
     sheet.appendRow(row);
     
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: "success" }))
-      .setMimeType(ContentService.MimeType.JSON);
+    // Return HTML for iframe (hidden form approach)
+    return HtmlService.createHtmlOutput("<html><body><script>window.parent.postMessage('upload_success','*');</script></body></html>");
       
   } catch (error) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: "error", message: error.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return HtmlService.createHtmlOutput("<html><body><p>Error: " + error.toString() + "</p></body></html>");
   }
 }
 
@@ -113,9 +124,7 @@ function doGet(e) {
 
 // Run this function ONCE manually to create headers
 function setupHeaders() {
-  var sheet = SpreadsheetApp.openById('1Gq9ohKosrMs9FY_f9sA1t-Om8ahH_EQMAdLw3k9y6Cg').getActiveSheet();
-  
-  // Clear existing content
+  var sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
   sheet.clear();
   
   var headers = [
@@ -156,6 +165,4 @@ function setupHeaders() {
   sheet.setColumnWidth(13, 250);
   sheet.setColumnWidth(14, 250);
   sheet.setColumnWidth(15, 250);
-  
-  SpreadsheetApp.getActiveSpreadsheet().toast("Headers created!", "Setup Complete");
 }
