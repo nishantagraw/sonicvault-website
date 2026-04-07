@@ -1,0 +1,49 @@
+<!--
+============================================================
+GOOGLE SHEETS SETUP GUIDE — DO THIS TO CONNECT THE FORM
+============================================================
+
+STEP 1: Open the Google Sheet
+   → https://docs.google.com/spreadsheets/d/1Gq9ohKosrMs9FY_f9sA1t-Om8ahH_EQMAdLw3k9y6Cg/edit
+
+STEP 2: Go to Extensions > Apps Script
+
+STEP 3: Delete everything in Code.gs
+
+STEP 4: Copy the ENTIRE content from the file:
+   → google-apps-script.js (in this same folder)
+   → Paste it into Code.gs
+
+STEP 5: Click the "Run" button (▶) and select "setupHeaders"
+   → This will create the headers in your sheet
+   → You'll need to authorize it (click "Review Permissions" > your Google account > Allow)
+
+STEP 6: Deploy the script:
+   → Click "Deploy" > "New deployment"
+   → Click the gear icon ⚙ > Select "Web app"
+   → Set "Execute as": Me (your email)
+   → Set "Who has access": Anyone
+   → Click "Deploy"
+   → COPY the Web App URL
+
+STEP 7: Open script.js in this project
+   → Find the line: const GOOGLE_SCRIPT_URL = 'PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE';
+   → Replace with your actual URL, e.g.:
+     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/xxxxx/exec';
+
+STEP 8: Push to GitHub
+   → git add -A
+   → git commit -m "Connect Google Sheets"
+   → git push
+
+DONE! Every form submission will now go to your Google Sheet.
+
+============================================================
+HEADERS THAT WILL BE CREATED:
+============================================================
+| Timestamp | Song/Album Title | Artist Name | Release Type |
+| Genre | Language | Release Date | Composer | Lyricist |
+| Email | Phone | Description | Audio File Name |
+| Album Art File Name | Status |
+============================================================
+-->

@@ -404,7 +404,7 @@ function buildReview() {
 
 // ===== SUBMIT RELEASE TO GOOGLE SHEETS =====
 // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-const GOOGLE_SCRIPT_URL = 'PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxeT40Ofo4U3eKv66Uv5KnR8mjVm7eckqE8wH2jvWN-C3VITzalMQ8rfwqlW6B_fnRZRQ/exec';
 
 function submitRelease() {
     const submitBtn = document.querySelector('#step4 .btn-primary');
