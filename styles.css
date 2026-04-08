@@ -209,9 +209,9 @@ h1, h2, h3, h4, h5, h6 {
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: -0.5px;
   text-decoration: none;
@@ -220,7 +220,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-logo img {
-  width: 55px;
+  width: 75px;
   height: auto;
 }
 
@@ -229,6 +229,7 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  margin-left: 6px;
 }
 
 /* Navbar inside the dark hero */
@@ -236,9 +237,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
 }
 
-.navbar:not(.scrolled) .nav-logo img {
-  filter: invert(1) brightness(2);
-}
+/* Logo keeps white bg on dark hero — looks clean */
 
 .nav-links {
   display: flex;
@@ -1155,6 +1154,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer .nav-logo {
   font-size: 1.6rem;
+  gap: 16px;
 }
 
 .footer-brand p {
@@ -1748,9 +1748,9 @@ h1, h2, h3, h4, h5, h6 {
 
   :root { --section-padding: 60px 0; }
 
-  .nav-logo img { width: 40px; }
-  .nav-logo { font-size: 1.1rem; gap: 6px; }
-  .nav-logo .logo-text { display: none; }
+  .nav-logo img { width: 50px; }
+  .nav-logo { font-size: 1rem; gap: 8px; }
+  .nav-logo .logo-text { display: inline; }
 }
 
 @media (max-width: 480px) {
